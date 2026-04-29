@@ -2,7 +2,7 @@
 
 A Claude skill that performs rigorous intrinsic valuations following **Aswath Damodaran's methodology** — the gold standard for fundamental analysis. Give Claude a company name and it will fetch data, build a full Excel DCF model, and give you a fair value per share with all assumptions sourced and auditable.
 
-Built and maintained by [@vikasgorur](https://github.com/vikasgorur).
+Built and maintained by [@vvikas](https://github.com/vvikas).
 
 ---
 
