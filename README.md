@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="Damodaran Valuation Skill — ROIC vs WACC excess returns chart" width="100%"/>
+<img src="assets/banner.svg" alt="Wall Street charges $50,000 for a DCF. Claude does it for free." width="100%"/>
 
 # 📊 Damodaran Valuation Skill
 
