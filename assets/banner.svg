@@ -1,0 +1,169 @@
+<svg width="1200" height="480" viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="excessGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#F59E0B" stop-opacity="0.30"/>
+      <stop offset="75%"  stop-color="#F59E0B" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.01"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="roicLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#D97757"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="480" fill="url(#bgGrad)"/>
+  <rect x="0.5" y="0.5" width="1199" height="479" fill="none" stroke="#30363d" stroke-width="1"/>
+
+  <!-- ── TITLE BAR ── -->
+  <circle cx="52" cy="44" r="9" fill="#D97757"/>
+  <text x="72" y="53" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif" font-size="24">
+    <tspan font-weight="700" fill="#e6edf3">Damodaran Valuation</tspan>
+    <tspan font-weight="400" fill="#D97757"> · Skill for Claude</tspan>
+  </text>
+  <text x="1148" y="40" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" fill="#6e7681">Rigorous intrinsic valuation, the Damodaran way</text>
+  <text x="1148" y="57" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#484f58">Every number sourced · Every assumption audited</text>
+
+  <line x1="40" y1="70" x2="1160" y2="70" stroke="#21262d" stroke-width="1"/>
+
+  <!-- ── CHART AREA: x 190–1050, y 100–390 ── -->
+  <!--
+    Y range: 5% – 28%  →  y = 390 − (pct − 0.05)/0.23 × 290
+      8%  → 352
+     12%  → 302
+     16%  → 251
+     20%  → 201
+     24%  → 150
+
+    X range: Year 0–15  →  x = 190 + year/15 × 860
+      Year  0 → 190
+      Year  3 → 362
+      Year  5 → 477
+      Year  8 → 649
+      Year 10 → 763
+      Year 13 → 935
+      Year 15 → 1050
+  -->
+
+  <!-- Horizontal grid -->
+  <line x1="190" y1="352" x2="1050" y2="352" stroke="#21262d" stroke-width="1"/>
+  <line x1="190" y1="302" x2="1050" y2="302" stroke="#21262d" stroke-width="1"/>
+  <line x1="190" y1="251" x2="1050" y2="251" stroke="#21262d" stroke-width="1"/>
+  <line x1="190" y1="201" x2="1050" y2="201" stroke="#21262d" stroke-width="1"/>
+  <line x1="190" y1="150" x2="1050" y2="150" stroke="#21262d" stroke-width="1"/>
+
+  <!-- Y-axis labels -->
+  <text x="178" y="356" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">8%</text>
+  <text x="178" y="306" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">12%</text>
+  <text x="178" y="255" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">16%</text>
+  <text x="178" y="205" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">20%</text>
+  <text x="178" y="154" text-anchor="end" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">24%</text>
+
+  <!-- Y-axis title (rotated) -->
+  <text transform="rotate(-90,48,255)" x="48" y="255" text-anchor="middle"
+        font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">Return on Invested Capital</text>
+
+  <!-- X-axis -->
+  <line x1="190" y1="390" x2="1050" y2="390" stroke="#30363d" stroke-width="1"/>
+
+  <!-- X-axis ticks + labels -->
+  <line x1="190"  y1="390" x2="190"  y2="396" stroke="#30363d"/>
+  <line x1="362"  y1="390" x2="362"  y2="396" stroke="#30363d"/>
+  <line x1="477"  y1="390" x2="477"  y2="396" stroke="#30363d"/>
+  <line x1="649"  y1="390" x2="649"  y2="396" stroke="#30363d"/>
+  <line x1="763"  y1="390" x2="763"  y2="396" stroke="#30363d"/>
+  <line x1="935"  y1="390" x2="935"  y2="396" stroke="#30363d"/>
+  <line x1="1050" y1="390" x2="1050" y2="396" stroke="#30363d"/>
+
+  <text x="190"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">0</text>
+  <text x="362"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">3</text>
+  <text x="477"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">5</text>
+  <text x="649"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">8</text>
+  <text x="763"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">10</text>
+  <text x="935"  y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">13</text>
+  <text x="1050" y="409" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">15+</text>
+  <text x="620"  y="430" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">Forecast Year</text>
+
+  <!-- Vertical dashed divider at Year 10 (x=763) -->
+  <line x1="763" y1="90" x2="763" y2="390" stroke="#30363d" stroke-width="1" stroke-dasharray="5,4"/>
+
+  <!-- Period labels above chart -->
+  <text x="476" y="88" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">◀  Competitive Advantage Period  ▶</text>
+  <text x="906" y="88" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">◀  Stable State  ▶</text>
+
+  <!-- ── EXCESS RETURN SHADED FILL ── -->
+  <!-- ROIC bezier: 24% at Year 0 → 8% at Year 15 (smooth fade) -->
+  <path d="M 190,150
+           C 350,150 445,245 590,275
+           C 730,305 850,342 950,350
+           C 990,352 1025,352 1050,352
+           L 1050,352 L 190,352 Z"
+        fill="url(#excessGrad)"/>
+
+  <!-- WACC line -->
+  <line x1="190" y1="352" x2="1050" y2="352"
+        stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- ROIC curve -->
+  <path d="M 190,150
+           C 350,150 445,245 590,275
+           C 730,305 850,342 950,350
+           C 990,352 1025,352 1050,352"
+        fill="none" stroke="url(#roicLine)" stroke-width="3"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Endpoint dots -->
+  <circle cx="190"  cy="150" r="5" fill="#FBBF24"/>
+  <circle cx="1050" cy="352" r="4" fill="#9CA3AF"/>
+
+  <!-- ── ANNOTATIONS ── -->
+
+  <!-- ROIC start label -->
+  <text x="206" y="140" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="13" font-weight="600" fill="#FBBF24">ROIC ≈ 24%</text>
+
+  <!-- WACC label (right end) -->
+  <text x="1060" y="344" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">ROIC →</text>
+  <text x="1060" y="357" font-family="-apple-system, sans-serif" font-size="11" fill="#6e7681">WACC</text>
+  <text x="1060" y="372" font-family="-apple-system, sans-serif" font-size="11" font-weight="600" fill="#3B82F6">≈ 8%</text>
+
+  <!-- "Excess Returns" callout in shaded area -->
+  <!-- at Year 3 (x≈362): ROIC curve ≈ y 195, WACC y=352, mid ≈ 274 -->
+  <text x="350" y="260" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="15" font-weight="700" fill="#F59E0B" fill-opacity="0.95">Excess Returns</text>
+  <text x="350" y="279" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="11" fill="#D97757" fill-opacity="0.80">ROIC − WACC &gt; 0  →  Value Created</text>
+
+  <!-- Vertical double-arrow on left showing gap magnitude -->
+  <line x1="162" y1="152" x2="162" y2="350" stroke="#F59E0B" stroke-width="1.5" stroke-opacity="0.45"/>
+  <polygon points="162,149 159,158 165,158" fill="#F59E0B" fill-opacity="0.45"/>
+  <polygon points="162,353 159,344 165,344" fill="#F59E0B" fill-opacity="0.45"/>
+  <text transform="rotate(-90,142,255)" x="142" y="255" text-anchor="middle"
+        font-family="-apple-system, sans-serif" font-size="10" fill="#F59E0B" fill-opacity="0.55">16% excess return</text>
+
+  <!-- Convergence arrow annotation -->
+  <path d="M 920,115 Q 960,118 980,135" fill="none" stroke="#484f58" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="850" y="112" font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">ROIC converges to WACC</text>
+  <text x="862" y="126" font-family="-apple-system, sans-serif" font-size="11" fill="#484f58">in stable state (Principle 3)</text>
+
+  <!-- ── LEGEND ── -->
+  <line x1="195" y1="452" x2="228" y2="452" stroke="url(#roicLine)" stroke-width="3"/>
+  <circle cx="212" cy="452" r="3.5" fill="#FBBF24"/>
+  <text x="236" y="456" font-family="-apple-system, sans-serif" font-size="12" fill="#8b949e">ROIC (Return on Invested Capital)</text>
+
+  <line x1="490" y1="452" x2="522" y2="452" stroke="#3B82F6" stroke-width="2.5"/>
+  <text x="530" y="456" font-family="-apple-system, sans-serif" font-size="12" fill="#8b949e">WACC (Weighted Avg. Cost of Capital)</text>
+
+  <rect x="780" y="444" width="14" height="14" fill="#F59E0B" fill-opacity="0.25" rx="2"/>
+  <text x="800" y="456" font-family="-apple-system, sans-serif" font-size="12" fill="#8b949e">Excess Returns = Economic Value Added</text>
+
+  <!-- Attribution -->
+  <text x="1148" y="470" text-anchor="end"
+        font-family="-apple-system, sans-serif" font-size="10" fill="#484f58">
+    Framework: Aswath Damodaran · NYU Stern School of Business
+  </text>
+</svg>

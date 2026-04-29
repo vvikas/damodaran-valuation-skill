@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Olympic_rings_without_rims.svg/1200px-Olympic_rings_without_rims.svg.png" width="0" height="0" alt="">
+<img src="assets/banner.svg" alt="Damodaran Valuation Skill — ROIC vs WACC excess returns chart" width="100%"/>
 
 # 📊 Damodaran Valuation Skill
 
