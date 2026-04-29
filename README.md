@@ -1,184 +1,315 @@
-# Damodaran Valuation Skill for Claude
+<div align="center">
 
-A Claude skill that performs rigorous intrinsic valuations following **Aswath Damodaran's methodology** — the gold standard for fundamental analysis. Give Claude a company name and it will fetch data, build a full Excel DCF model, and give you a fair value per share with all assumptions sourced and auditable.
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Olympic_rings_without_rims.svg/1200px-Olympic_rings_without_rims.svg.png" width="0" height="0" alt="">
 
-Built and maintained by [@vvikas](https://github.com/vvikas).
+# 📊 Damodaran Valuation Skill
 
----
+### Rigorous intrinsic valuation — the Damodaran way — powered by Claude AI
 
-## What it does
+[![Claude Skill](https://img.shields.io/badge/Claude-Skill-D97757?logo=anthropic&logoColor=white&labelColor=1a1a1a)](https://claude.ai)
+[![Methodology](https://img.shields.io/badge/Methodology-Damodaran-2B6CB0?labelColor=1a1a1a)](https://pages.stern.nyu.edu/~adamodar/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?labelColor=1a1a1a)](LICENSE)
+[![Models Covered](https://img.shields.io/badge/Models-DCF%20%7C%20Excess%20Return%20%7C%20Options-8B5CF6?labelColor=1a1a1a)](SKILL.md)
 
-Tell Claude something like:
+<br>
 
-> *"Value Infosys using Damodaran methodology"*
-> *"What's the fair value of TCS?"*
-> *"Build a DCF model for Eicher Motors"*
-> *"Is ABB India overvalued?"*
+> *Give Claude a company name. Get a full Excel DCF model — every number sourced to the filing it came from.*
 
-Claude will:
-
-1. Fetch the latest financial filings (annual report or TTM from most recent quarterly)
-2. Pull geographic revenue breakdown to compute the correct **blended WACC** — not a single flat ERP
-3. Run 5-10 years of historical ROIC, margin, and reinvestment analysis
-4. Build a full Excel workbook with every number sourced to the filing it came from
-5. Present value per share with upside/downside vs. current market price
+<br>
 
 ---
 
-## Features
+</div>
 
-### Three valuation frameworks
-- **Non-financial companies** (FCFF/DCF) — tech, pharma, consumer, auto, industrials, etc.
-- **Financial companies** (Excess Return / DDM) — banks, NBFCs, insurance, asset managers
-- **Distressed / option-based** — auto-triggered when DCF equity goes negative; also handles natural resource options (oil/gas reserves) and patent options (biotech pipeline)
+## What this is
 
-### Geographic WACC — the right way
-Most valuation tools apply a single flat ERP. This skill does it properly: it breaks out revenue by geography, looks up Damodaran's country risk premium per country, and computes a **revenue-weighted blended ERP**. An Indian IT company earning 70% in the US gets a dramatically different (lower) WACC than a purely domestic company. The Cost of Capital sheet shows exactly how each geography contributes.
+A **Claude skill** (a structured instruction file that Claude reads as context) that makes Claude perform investment valuation the way [Aswath Damodaran](https://pages.stern.nyu.edu/~adamodar/) — NYU Stern Professor and the world's foremost authority on valuation — actually teaches it.
 
-### Full source citation
-Every single number in the Excel model has a source column — which filing, which page, which date. No black boxes.
+Most AI valuation tools produce numbers without rigor. This skill produces models you can audit:
 
-### Damodaran's own design patterns
-- `fcffsimpleginzu.xlsx` structure for non-financials
-- `eqexret.xls` structure for financials
-- Synthetic rating table (Damodaran's `ratings.xls`) for cost of debt
-- Default/override toggles on all key assumptions (stable growth = Rf by default, Beta → 1 in stable state, etc.)
-- Sensitivity tables: WACC × stable growth, margin × revenue growth
+- Every input cell has a `Source` column pointing to the exact filing and date
+- WACC is computed using **geographic revenue breakdown** — not a flat ERP
+- The right model is selected automatically: DCF for operating companies, Excess Return for banks, Black-Scholes for distressed firms
+- Output is a complete multi-sheet Excel workbook, structured like Damodaran's own templates
+
+<br>
+
+---
+
+## How to use it
+
+### As a Claude Code plugin (recommended)
+
+```bash
+git clone https://github.com/vvikas/damodaran-valuation-skill
+cp -r damodaran-skill-repo/ /mnt/skills/user/damodaran-valuation/
+```
+
+Claude will pick it up automatically on the next conversation. Then just ask:
+
+```
+Value Infosys using Damodaran methodology
+What's the fair value of TCS?
+Build a DCF model for TSMC
+Is Meta overvalued?
+```
+
+### As a Claude Project
+
+1. Create a new [Claude Project](https://claude.ai)
+2. Paste the contents of `SKILL.md` into **Project Instructions**
+3. Upload the `references/` files as **Project Knowledge**
+4. All conversations in that project now have the skill active
+
+### Inline in any conversation
+
+Paste the contents of `SKILL.md` at the top of your message, prefixed with:
+> *"Use the following skill instructions for this conversation:"*
+
+<br>
+
+---
+
+## What Claude builds
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🏭 Operating Companies
+*(Tech, Pharma, Consumer, Auto, Industrials)*
+
+Full **FCFF / DCF** model:
+- 5–10 yr historical ROIC & margin analysis
+- Geographic revenue → blended WACC
+- Revenue + FCFF projection (5–10 yr)
+- Bridge: Operating assets → Equity value
+- Sensitivity: WACC × growth, margin × revenue
+
+</td>
+<td width="33%" valign="top">
+
+### 🏦 Financial Companies
+*(Banks, NBFCs, Insurance, Asset Managers)*
+
+**Excess Return / DDM** model:
+- ROE, payout, sustainable growth history
+- Tier 1 Capital, NPA, NIM analysis
+- `(ROE − Ke) × BV Equity` per year
+- PV of excess returns + terminal value
+- Geographic blended Ke
+
+</td>
+<td width="33%" valign="top">
+
+### ⚠️ Distressed / Option-Based
+*(Auto-triggered when DCF equity < 0)*
+
+**Black-Scholes equity-as-call-option:**
+- Equity = Call on firm assets
+- Covers natural resource firms (oil/gas reserves)
+- Covers biotech (patent pipeline options)
+- Never double-counts DCF + option value
+
+</td>
+</tr>
+</table>
+
+<br>
+
+---
+
+## The Geographic WACC — why it matters
+
+Most tools apply a single flat equity risk premium. This skill does it properly.
+
+```
+Revenue breakdown  →  Country Risk Premium per geography  →  Revenue-weighted blended ERP
+```
+
+An Indian IT company earning **70% revenue in the US** gets a dramatically lower WACC than a purely domestic company — because most of its cash flows face US market risk, not India's. The Cost of Capital sheet shows exactly how each geography contributes, with sources from Damodaran's own country risk dataset.
+
+<br>
 
 ---
 
 ## Excel workbook structure
 
-### Non-financial companies (7-8 sheets)
+### Non-financial companies (7–8 sheets)
 
-| Sheet | Contents |
-|-------|----------|
-| 1. Inputs & Assumptions | All inputs in one place — company financials, geographic revenue table, risk parameters, growth assumptions. Every row has Value \| Source \| Filing Period |
-| 2. Historical Analysis | 5-10 years of ROIC, operating margin, reinvestment rate, S/C ratio, FCFF |
-| 3. Cost of Capital | Geographic revenue weights → blended ERP → Ke → WACC. Full synthetic rating table for cost of debt |
-| 4. Revenue & FCFF Projection | Year-by-year DCF engine. Revenue, margins, tax, reinvestment, FCFF, discount factors, PV |
-| 5. Bridge to Equity | Operating asset value → add cash, subtract debt → options/RSU adjustment → value per share |
-| 6. Sanity Check | Implied P/E, EV/EBITDA, EV/Revenue vs. industry. Sensitivity tables |
-| 7. Synthetic Rating Table | Damodaran's ICR → rating → default spread lookup |
-| 8. Option Valuation *(if triggered)* | Black-Scholes equity-as-call-option for distressed firms, or natural resource / patent option valuation |
+| Sheet | What's inside |
+|-------|---------------|
+| **1. Inputs & Assumptions** | Every input in one place. Company financials, geographic revenue table, risk parameters, growth assumptions. Each row: `Value | Source | Filing Period` |
+| **2. Historical Analysis** | 5–10 years of ROIC, operating margin, reinvestment rate, Sales/Capital, FCFF |
+| **3. Cost of Capital** | Geographic revenue weights → blended ERP → Ke → WACC. Full synthetic rating table for Kd |
+| **4. Revenue & FCFF Projection** | Year-by-year DCF engine. Revenue, margins, tax, reinvestment, FCFF, discount factors, PV |
+| **5. Bridge to Equity** | Operating asset value → +cash −debt → options/RSU dilution → value per share |
+| **6. Sanity Check** | Implied P/E, EV/EBITDA, EV/Revenue vs. sector. Sensitivity tables |
+| **7. Synthetic Rating Table** | Damodaran's ICR → rating → default spread lookup |
+| **8. Option Valuation** *(if triggered)* | Black-Scholes for distressed, natural resource, or patent option cases |
 
-### Financial companies (6-7 sheets)
-
-| Sheet | Contents |
-|-------|----------|
-| 1. Inputs & Assumptions | Same philosophy — adds Tier 1 Capital, NPA ratios, geographic revenue for blended Ke |
-| 2. Historical Analysis | ROE, payout, sustainable growth, Tier 1 ratio, NPA, NIM |
-| 3. Excess Return Model | Year-by-year: (ROE - Ke) × BV Equity, PV of excess returns |
-| 4. Bridge to Equity | BV Equity + PV Excess Returns + PV Terminal Value → value per share |
-| 5. Sanity Check | Implied P/BV vs ROE, sensitivity tables |
-| 6. Synthetic Rating Table | Same as non-financial |
-| 7. Option Valuation *(if triggered)* | For deeply distressed banks (NPA > 10%, CAR below minimum) |
+<br>
 
 ---
 
 ## File structure
 
 ```
-damodaran-valuation/
-├── SKILL.md                          # Main skill — Claude reads this first
+damodaran-skill-repo/
+├── SKILL.md                          ← Claude reads this (802 lines, the orchestrator)
+├── sync-skill.sh                     ← One command to redeploy after edits
 └── references/
-    ├── country-risk-parameters.md    # Geographic WACC: CRP by country, blended ERP framework
-    ├── indian-market-specifics.md    # G-Sec rates, Indian tax regimes, BSE/NSE data sources
-    ├── non-financial-valuation.md    # Detailed FCFF/DCF methodology
-    ├── financial-valuation.md        # Excess Return / DDM for banks and NBFCs
-    └── option-based-valuation.md     # Black-Scholes for distress, natural resources, patents
+    ├── country-risk-parameters.md    ← CRP by country, blended ERP, risk-free rates by currency
+    ├── indian-market-specifics.md    ← G-Sec rates, Indian tax regimes, BSE/NSE data sources
+    ├── non-financial-valuation.md    ← Full FCFF/DCF methodology
+    ├── financial-valuation.md        ← Excess Return / DDM for banks and NBFCs
+    └── option-based-valuation.md     ← Black-Scholes for distress, natural resources, patents
 ```
 
-**SKILL.md** (802 lines) is the orchestrator. It tells Claude when to read each reference file so the right detail is loaded for the right company type.
+`SKILL.md` is the orchestrator — it tells Claude when to read each reference file so the right detail is loaded for the right company type.
+
+<br>
 
 ---
 
-## Installation
+## Companies valued with this skill
 
-### Option A: Claude.ai Skills (if you have access)
+**Indian markets**
+TCS · Infosys · Meesho · Cipla · Aurobindo Pharma · Ola Electric · Karnataka Bank · Patanjali Foods · Eicher Motors · AstraZeneca India · ABB India · Coforge · HCLTech
 
-1. Clone this repo
-2. Copy the `damodaran-valuation/` folder into your Claude skills directory:
-   ```
-   /mnt/skills/user/damodaran-valuation/
-   ```
-3. Claude will pick it up automatically on the next conversation
+**US & Global**
+Meta · Microsoft · Reddit · Bumble · AMC · Plug Power · Zevia · Pinterest · Figma · TSMC
 
-### Option B: Paste into a Claude Project
-
-1. Create a new Claude Project
-2. Open `SKILL.md` and paste its contents into the Project's custom instructions
-3. Attach the reference files as uploaded documents
-4. The skill will be active for all conversations in that project
-
-### Option C: Use inline in any conversation
-
-Copy the contents of `SKILL.md` and paste it at the start of your conversation with Claude, prefixed with: *"Use the following skill instructions for this conversation:"*
+<br>
 
 ---
 
 ## Development workflow
 
-This repo is the **source of truth**. The Claude skills directory is the deployed version.
-
 ```
-GitHub repo  →  (copy files)  →  /mnt/skills/user/damodaran-valuation/
-  (edit here)                        (Claude uses this at runtime)
+GitHub repo  ──(edit here)──▶  ./sync-skill.sh  ──▶  /mnt/skills/user/damodaran-valuation/
+  source of truth                                        Claude reads this at runtime
 ```
 
-**Recommended dev loop with Claude Code:**
+Claude Code handles the sync loop:
 ```bash
-# After editing files in the repo:
-cp -r damodaran-valuation/ /mnt/skills/user/damodaran-valuation/
-
-# Or set up a simple sync script:
+# After editing any file in the repo:
 ./sync-skill.sh
+
+# Or with Claude Code — just say:
+# "Update the CRP table in the India section and redeploy"
+# It commits, copies, done.
 ```
 
----
-
-## Companies valued so far
-
-This skill has been used to build full DCF models for:
-
-**Indian markets:** TCS, Infosys, Meesho, Cipla, Aurobindo Pharma, Ola Electric, Karnataka Bank, Patanjali Foods, Eicher Motors, AstraZeneca India, ABB India
-
-**US markets:** Meta, Microsoft, Reddit, Bumble, AMC, Plug Power, Zevia, Pinterest, Figma
+<br>
 
 ---
 
-## Key Damodaran principles baked in
+## Attribution — standing on Damodaran's shoulders
 
-1. Every number needs a story, every story needs a number
-2. Revenue growth must tie to reinvestment — you can't grow without investing
-3. ROIC converges to WACC in steady state — excess returns attract competition
-4. Terminal growth ≤ economy growth (default = risk-free rate)
-5. For financials, debt IS the business — never compute FCFF for banks
-6. **Geographic revenue determines WACC** — where you earn your money matters as much as how much you earn
-7. Equity is a call option — even when DCF equity is negative, Black-Scholes gives it value
-8. Never double count — DCF assets and option assets are mutually exclusive
+This skill is an implementation of publicly taught frameworks. All intellectual credit belongs to **Prof. Aswath Damodaran**.
+
+<table>
+<tr>
+<td width="60px" align="center">📚</td>
+<td>
+
+**Free valuation course (the best finance course on the internet)**
+[Valuation — MBA course, NYU Stern](http://people.stern.nyu.edu/adamodar/New_Home_Page/corpfin.html) — full lecture slides, videos, and problem sets, free
+
+</td>
+</tr>
+<tr>
+<td align="center">📊</td>
+<td>
+
+**Datasets used in this skill (updated annually)**
+[pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html) — ERP by country, CRP, sector betas, default spreads, industry multiples
+
+</td>
+</tr>
+<tr>
+<td align="center">📝</td>
+<td>
+
+**Excel templates this skill mirrors**
+[pages.stern.nyu.edu/~adamodar/New_Home_Page/spreadsh.htm](https://pages.stern.nyu.edu/~adamodar/New_Home_Page/spreadsh.htm) — `fcffsimpleginzu.xlsx`, `eqexret.xls`, `optiontodefault.xls`, `ratings.xls`
+
+</td>
+</tr>
+<tr>
+<td align="center">▶️</td>
+<td>
+
+**YouTube — full lecture series**
+[youtube.com/@AswathDamodaran](https://www.youtube.com/@AswathDamodaran) — Valuation, Corporate Finance, Investment Philosophies. Thousands of hours, all free.
+
+</td>
+</tr>
+<tr>
+<td align="center">✍️</td>
+<td>
+
+**Musings on Markets — his blog**
+[aswathdamodaran.blogspot.com](https://aswathdamodaran.blogspot.com) — real-time valuation commentary, market notes, model updates
+
+</td>
+</tr>
+<tr>
+<td align="center">🐦</td>
+<td>
+
+**Follow him**
+[@AswathDamodaran on X](https://x.com/AswathDamodaran) — dataset release announcements, valuation takes, teaching notes
+
+</td>
+</tr>
+</table>
+
+> *"Valuation is not an exercise in looking up numbers; it's a process of understanding businesses."*
+> — Aswath Damodaran
+
+<br>
 
 ---
 
-## Data sources used
+## Eight principles baked into the skill
+
+These come directly from Damodaran's teaching — not rules invented here:
+
+1. **Every number needs a story, every story needs a number** — assumptions must be narratively consistent
+2. **Revenue growth must tie to reinvestment** — you can't grow without investing capital
+3. **ROIC converges to WACC in steady state** — excess returns attract competition and disappear
+4. **Terminal growth ≤ economy growth** — default is the risk-free rate, not analyst optimism
+5. **For financials, debt IS the business** — never compute FCFF for banks; use Excess Return
+6. **Geographic revenue determines WACC** — where you earn matters as much as how much you earn
+7. **Equity is a call option** — even negative DCF equity has value via Black-Scholes
+8. **Never double count** — DCF assets and option assets are mutually exclusive
+
+<br>
+
+---
+
+## Data sources
 
 | Market | Sources |
 |--------|---------|
-| India | Screener.in, BSE/NSE filings, Moneycontrol, Tijori Finance, RBI (G-Sec yields) |
-| US | SEC EDGAR (10-K/10-Q), Macrotrends, Yahoo Finance |
-| Global risk parameters | Damodaran's website (pages.stern.nyu.edu/~adamodar) — ERP, CRP, sector betas |
+| **India** | Screener.in, BSE/NSE filings, Moneycontrol, Tijori Finance, RBI (G-Sec yields) |
+| **US** | SEC EDGAR (10-K / 10-Q), Macrotrends, Yahoo Finance |
+| **Global risk parameters** | [Damodaran's website](https://pages.stern.nyu.edu/~adamodar/) — ERP, CRP, sector betas, default spreads |
+
+<br>
 
 ---
 
 ## Changelog
 
-### v1.1 — Geographic WACC (Apr 2025)
-- Added geographic revenue breakdown as a required data gathering step
-- Rebuilt Cost of Capital sheet with 6 sections: geographic weights → country ERPs → blended ERP → Ke → cost of debt → final WACC
-- New reference file: `country-risk-parameters.md` — CRP ranges for 40+ countries, regional aggregates, risk-free rates by currency, Lambda approach for multinationals
-- Fixed: financial company Inputs sheet now also has geographic revenue table driving blended Ke
+### v1.1 — Geographic WACC *(Apr 2025)*
+- Geographic revenue breakdown now a required data gathering step
+- Rebuilt Cost of Capital sheet with 6 sections: geographic weights → country ERPs → blended ERP → Ke → Kd → WACC
+- New reference: `country-risk-parameters.md` — CRP ranges for 40+ countries, Lambda approach for multinationals
+- Financial company model updated with same geographic Ke computation
 - Added currency consistency rules and INR/USD differential cross-check
-- Updated Key Principles: added geographic WACC and currency consistency as explicit principles
 
 ### v1.0 — Initial release
 - Full FCFF/DCF for non-financial companies
@@ -186,25 +317,29 @@ This skill has been used to build full DCF models for:
 - Option-based valuation for distressed firms, natural resources, patents
 - TTM computation for quarterly filers
 - Source citation on every input row
-- Indian market specifics reference (G-Sec, tax regimes, data sources)
+- Indian market specifics reference
+
+<br>
 
 ---
 
 ## Contributing
 
-PRs welcome. The most useful contributions:
+PRs welcome. Most useful contributions:
 
-- **New country parameters** in `country-risk-parameters.md` — more granular CRP data, updated sovereign ratings
-- **Sector-specific adjustments** — e.g., insurance vs. banking differences in the financial model, pharma-specific pipeline option handling
-- **Additional data source guides** — equivalents of `indian-market-specifics.md` for other markets (Southeast Asia, MENA, LatAm)
-- **Bug fixes** — if a formula in the Excel structure description is wrong, or a Damodaran principle is misapplied
+- **New country parameters** — more granular CRP data, updated sovereign ratings in `country-risk-parameters.md`
+- **Market-specific guides** — equivalents of `indian-market-specifics.md` for Southeast Asia, MENA, LatAm, Europe
+- **Sector adjustments** — insurance vs. banking differences, pharma pipeline option handling
+- **Bug fixes** — if a Damodaran principle is misapplied or a formula description is wrong
 
----
-
-## License
-
-MIT. Use freely, attribution appreciated.
+<br>
 
 ---
 
-*Built on Damodaran's published methodology — see [pages.stern.nyu.edu/~adamodar](http://pages.stern.nyu.edu/~adamodar) for the source frameworks, datasets, and spreadsheet templates this skill is based on.*
+<div align="center">
+
+Built by [@vvikas](https://github.com/vvikas) &nbsp;·&nbsp; MIT License &nbsp;·&nbsp; Powered by [Claude](https://claude.ai)
+
+*All valuation methodology and datasets are the work of [Prof. Aswath Damodaran](https://pages.stern.nyu.edu/~adamodar/), NYU Stern School of Business.*
+
+</div>
