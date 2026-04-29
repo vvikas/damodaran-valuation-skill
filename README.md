@@ -21,6 +21,10 @@
 
 </div>
 
+> **Disclaimer:** This tool is for educational and research purposes only. The models it produces are not financial advice, investment recommendations, or solicitations to buy or sell any security. Always do your own due diligence and consult a qualified financial advisor before making investment decisions.
+
+---
+
 ## What this is
 
 A **Claude skill** (a structured instruction file that Claude reads as context) that makes Claude perform investment valuation the way [Aswath Damodaran](https://pages.stern.nyu.edu/~adamodar/) — NYU Stern Professor and the world's foremost authority on valuation — actually teaches it.
@@ -42,7 +46,8 @@ Most AI valuation tools produce numbers without rigor. This skill produces model
 
 ```bash
 git clone https://github.com/vvikas/damodaran-valuation-skill
-cp -r damodaran-skill-repo/ /mnt/skills/user/damodaran-valuation/
+cd damodaran-valuation-skill
+./sync-skill.sh   # copies SKILL.md + references/ into /mnt/skills/user/damodaran-valuation/
 ```
 
 Claude will pick it up automatically on the next conversation. Then just ask:
@@ -194,11 +199,11 @@ GitHub repo  ──(edit here)──▶  ./sync-skill.sh  ──▶  /mnt/skills
 Claude Code handles the sync loop:
 ```bash
 # After editing any file in the repo:
-./sync-skill.sh
+./sync-skill.sh     # copies SKILL.md + references/ to /mnt/skills/user/damodaran-valuation/
 
 # Or with Claude Code — just say:
 # "Update the CRP table in the India section and redeploy"
-# It commits, copies, done.
+# It commits, syncs, done.
 ```
 
 <br>
@@ -341,5 +346,7 @@ PRs welcome. Most useful contributions:
 Built by [@vvikas](https://github.com/vvikas) &nbsp;·&nbsp; MIT License &nbsp;·&nbsp; Powered by [Claude](https://claude.ai)
 
 *All valuation methodology and datasets are the work of [Prof. Aswath Damodaran](https://pages.stern.nyu.edu/~adamodar/), NYU Stern School of Business.*
+
+*Not financial advice. For educational and research purposes only.*
 
 </div>

@@ -6,6 +6,8 @@
 SKILL_DIR="/mnt/skills/user/damodaran-valuation"
 
 echo "Syncing damodaran-valuation skill..."
-cp -r damodaran-valuation/ "$SKILL_DIR/"
+mkdir -p "$SKILL_DIR/references"
+cp SKILL.md "$SKILL_DIR/"
+cp references/*.md "$SKILL_DIR/references/"
 echo "Done. Skill updated at: $SKILL_DIR"
 echo "Changes will be active in your next Claude conversation."

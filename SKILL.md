@@ -189,7 +189,7 @@ Compute averages, medians, and spot trends. These inform projection assumptions.
 
 ## Step 4: Build the Excel Model
 
-Use openpyxl to construct the workbook. Follow the xlsx skill guidelines strictly:
+Use openpyxl to construct the workbook. If the `xlsx` skill is available in your context, follow its guidelines; otherwise use openpyxl directly with the formatting rules below:
 - ALL calculations as Excel formulas (never hardcoded Python-computed values)
 - Blue text (RGB: 0,0,255) for hardcoded inputs
 - Black text for formulas
